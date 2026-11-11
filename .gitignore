@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+secrets.json
+*.pem
+*.key
+
+# Datasets and generated results
+data/
+datasets/
+outputs/
+results/
+runs/
+gen_*/
+real_*/
+*.mp4
+*.gif
+
+# Model weights and checkpoints
+checkpoints/
+models/
+weights/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# Hugging Face / ML caches
+.cache/
+.huggingface/
+
+# Local copies of papers and third-party snippets
+/papers/*.pdf
+/papers_md/
+/repos_code/
+
+# Course handout and internal working notes
+/Tarea_Generacion_Imagenes_DM_GEN_IA_2026_1S.pdf
+/Tarea_Generacion_Imagenes_DM_GEN_IA_2026_1S.md
+/NOTAS_INSIGHTS_Y_PLAN.md
+/REPOS_ESTADO_DEL_ARTE_Y_CODIGO.md
+/docs/superpowers/
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
