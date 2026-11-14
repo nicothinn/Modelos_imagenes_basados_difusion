@@ -41,6 +41,9 @@ weights/
 .cache/
 .huggingface/
 
+# Local training artifacts (weights, histories, downloaded notebooks)
+_local/
+
 # Local copies of papers and third-party snippets
 /papers/*.pdf
 /papers_md/
