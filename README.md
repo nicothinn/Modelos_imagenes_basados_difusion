@@ -1,55 +1,70 @@
-# Generación de imágenes con modelos de difusión
+# Generación de imágenes y video con modelos de difusión
 
-Proyecto académico de **Inteligencia Artificial Generativa** de la Universidad Autónoma de Occidente. Reúne cuatro notebooks sobre difusión para imágenes, visualización de Stable Diffusion y arquitecturas de generación de video.
+Proyecto académico de **Inteligencia Artificial Generativa** de la Universidad Autónoma de Occidente. Reúne cuatro notebooks sobre difusión para imágenes, visualización de Stable Diffusion y arquitecturas de video, más el documento del punto 4.
 
-> **Estado:** material experimental y educativo. Las métricas y muestras guardadas en los notebooks no constituyen una comparación controlada con resultados publicados.
+> **Estado:** punto 1 cerrado y punto 4 documentado. Los puntos 2 y 3 tienen el código corregido y están pendientes de la corrida final en Colab.
 
 ## Notebooks
 
-| Notebook | Contenido |
-|---|---|
-| [01 — MNIST y CIFAR-10](./01_Punto1_FINAL.ipynb) | Entrenamiento DDPM, generación y métricas exploratorias FID, IS, KID, precisión y recall. |
-| [02 — Oxford Flowers](./02_Flowers_Chollet.ipynb) | Generación de flores con Keras y difusión; incluye una inferencia adicional de Stable Diffusion 3. |
-| [03 — Visualización de Stable Diffusion](./03_SD_Visual.ipynb) | Latentes durante el denoising, componentes del pipeline y comparación latente/píxel. |
-| [04 — Arquitecturas de video](./04_Video_SOTA.ipynb) | Explicación de arquitecturas, objetivos, evaluación y demo de CogVideoX. |
+| Notebook | Contenido | Abrir en Colab |
+|---|---|---|
+| 01 — MNIST y CIFAR-10 | DDPM con diffusers, 15000 pasos por dataset, FID/KID/precisión/recall | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/01_Punto1_FINAL.ipynb) |
+| 02 — Oxford Flowers | Difusión con Keras a 128x128, 80 épocas, FID con 1000 imágenes | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/02_Flowers_Chollet.ipynb) |
+| 03 — Visualización de Stable Diffusion | Latentes 64x64, VAE, texto CLIP y proceso de denoising | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/03_SD_Visual.ipynb) |
+| 04 — Arquitecturas de video | Explicación de arquitecturas, objetivos, evaluación y demo de CogVideoX | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/04_Video_SOTA.ipynb) |
+
+## Resultados del punto 1
+
+Protocolo: **1000 imágenes generadas contra 1000 del test**, 32x32, características Inception-v3. FID, KID, precisión y recall con `torch-fidelity`.
+
+| Dataset | FID ↓ | KID ↓ | Precisión ↑ | Recall ↑ | F-score ↑ |
+|---|---|---|---|---|---|
+| MNIST | 32.9 | 0.023 | 0.588 | 0.740 | 0.655 |
+| CIFAR-10 | 91.1 | 0.040 | 0.781 | 0.345 | 0.479 |
+
+`clean-fid` da 31.1 en MNIST y 95.4 en CIFAR-10; se usa como comprobación, no como protocolo principal. Los valores no son comparables con papers que usan 50000 muestras u otro extractor.
+
+## Documento del punto 4
+
+- [Word](./docs/Documento_Punto4_Arquitecturas_Video.docx)
+- [PDF](./docs/Documento_Punto4_Arquitecturas_Video.pdf)
+
+El documento cubre representación de video, U-Net 3D, cascadas, difusión latente, DiT/MM-DiT, objetivos de entrenamiento, condicionamiento, video largo, eficiencia, FVD, VBench, tabla comparativa y demo de CogVideoX-2B.
 
 ## Cómo ejecutarlos
 
-Los notebooks están preparados para **Google Colab** y descargan datos o modelos durante la ejecución; no se incluyen datasets ni pesos en este repositorio.
+Los notebooks están preparados para **Google Colab**. Descárgalos o ábrelos con el badge y selecciona un runtime con GPU T4.
 
-1. Abre el notebook desde GitHub con **Open in Colab**, o descárgalo y súbelo a Colab.
-2. Selecciona un runtime con GPU cuando el notebook lo requiera.
-3. Ejecuta las celdas en orden. Cada notebook instala sus dependencias en sus primeras celdas.
-4. Para modelos de Hugging Face que pidan autenticación, autoriza el modelo y guarda `HF_TOKEN` en **Colab Secrets**. Nunca pegues tokens en una celda ni los subas a GitHub.
-5. Revisa los términos de uso de datasets y checkpoints antes de generar o redistribuir resultados.
+1. Ejecuta las celdas en orden. Cada notebook instala sus dependencias en las primeras celdas.
+2. Para modelos que pidan autenticación, agrega `HF_TOKEN` en **Colab Secrets**. No pegues tokens en una celda ni los subas al repositorio.
+3. Revisa los términos de datasets y checkpoints antes de redistribuir resultados.
+4. El 01 y el 02 guardan checkpoints durante el entrenamiento; si Colab se reinicia, revisa la ruta antes de volver a entrenar.
 
-No hay enlaces directos a sesiones de Colab: se abren desde los archivos del repositorio.
+## Estado y limitaciones
 
-## Estado y limitaciones conocidas
+- **01:** entrenado con 15000 pasos en MNIST y CIFAR-10. DPM-Solver se excluyó de la comparación porque no convergió con este modelo y 20 pasos.
+- **02:** 80 épocas configuradas y FID con 1000 imágenes; la corrida final y sus figuras están pendientes. El dataset se baraja antes de agrupar los lotes.
+- **03:** escala del VAE corregida (`scaling_factor = 0.18215`) y pasos de muestreo repartidos en la trayectoria; la corrida final está pendiente.
+- **04:** el documento es el entregable principal; la demo de CogVideoX-2B ilustra el pipeline y no es un benchmark.
+- Las métricas generativas dependen del número de muestras, el preprocesamiento y el extractor. No compares valores de notebooks distintos sin fijar el protocolo.
 
-- **Notebook 01:** la función de entrenamiento recorre una pasada del DataLoader por llamada; el argumento `steps` no equivale actualmente a 15 000 actualizaciones. Verifica el entrenamiento y vuelve a generar las métricas antes de reportar resultados. Algunas salidas guardadas pueden corresponder a una versión anterior del código.
-- **Notebook 02:** el FID registrado usa 64 imágenes reales y 64 generadas; tómalo como una comprobación exploratoria, no como una estimación estable. El checkpoint está configurado para guardar el mejor modelo sin proporcionar `val_loss`.
-- **Notebook 03:** verifica la escala del VAE al decodificar latentes intermedios y la autenticación del modelo en un runtime limpio antes de reutilizar las visualizaciones.
-- **Notebook 04:** la demo genera un clip corto; ilustra el pipeline, pero no es un benchmark comparativo.
-- Las métricas generativas dependen del número de muestras, del preprocesamiento y del extractor utilizado. No compares valores de notebooks distintos sin fijar ese protocolo.
-
-El notebook 02 ocupa aproximadamente **33 MB** por sus salidas incrustadas. Antes de publicar, limpia outputs transitorios o conserva solo las visualizaciones necesarias. `.gitignore` no puede excluir contenido incrustado dentro de un `.ipynb`.
-
-## Estructura prevista del repositorio
+## Estructura del repositorio
 
 ```text
 README.md
-.gitignore
 01_Punto1_FINAL.ipynb
 02_Flowers_Chollet.ipynb
 03_SD_Visual.ipynb
 04_Video_SOTA.ipynb
+docs/
+  Documento_Punto4_Arquitecturas_Video.docx
+  Documento_Punto4_Arquitecturas_Video.pdf
 ```
 
-Los archivos de apoyo locales —enunciado, copias de papers, texto extraído, fragmentos de repositorios, cachés, datos, checkpoints y notas de trabajo— se excluyen del conjunto público mediante `.gitignore`; no se borran del equipo.
+Los archivos de apoyo locales —datasets, pesos, checkpoints, historiales y notas de trabajo— se excluyen mediante `.gitignore` y no se distribuyen.
 
-## Fuentes, Licencia y materiales de terceros
+## Fuentes, licencia y materiales de terceros
 
-Las referencias académicas se identifican por título y arXiv ID en los notebooks; por ejemplo: [DDPM](https://arxiv.org/abs/2006.11239), [Latent Diffusion](https://arxiv.org/abs/2112.10752), [Stable Video Diffusion](https://arxiv.org/abs/2311.15127), [CogVideoX](https://arxiv.org/abs/2408.06072), [HunyuanVideo](https://arxiv.org/abs/2412.03603), [Wan](https://arxiv.org/abs/2503.20314), [LTX-Video](https://arxiv.org/abs/2501.00103) y [SANA-Video](https://arxiv.org/abs/2509.24695). No se redistribuyen aquí PDFs ni texto completo extraído.
+Las referencias académicas se identifican por título y arXiv ID en los notebooks y en el documento; por ejemplo: [DDPM](https://arxiv.org/abs/2006.11239), [Latent Diffusion](https://arxiv.org/abs/2112.10752), [CogVideoX](https://arxiv.org/abs/2408.06072), [HunyuanVideo](https://arxiv.org/abs/2412.03603), [Wan](https://arxiv.org/abs/2503.20314), [LTX-Video](https://arxiv.org/abs/2501.00103) y [SANA-Video](https://arxiv.org/abs/2509.24695). No se redistribuyen PDFs ni texto completo extraído.
 
 Este proyecto no declara una licencia propia. Las licencias y condiciones de los datasets, modelos, checkpoints y fragmentos de terceros siguen siendo las de sus autores; verifica esos términos antes de reutilizarlos o redistribuirlos.
