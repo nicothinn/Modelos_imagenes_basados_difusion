@@ -2,7 +2,7 @@
 
 Proyecto académico de **Inteligencia Artificial Generativa** de la Universidad Autónoma de Occidente. Reúne cuatro notebooks sobre difusión para imágenes, visualización de Stable Diffusion y arquitecturas de video, más el documento del punto 4.
 
-> **Estado:** punto 1 cerrado, punto 3 ejecutado y punto 4 documentado. El punto 2 tiene el código corregido y está pendiente de la corrida final en Colab.
+> **Estado:** punto 1 cerrado, punto 3 ejecutado y punto 4 documentado con demo ejecutada. El punto 2 tiene el código corregido y está pendiente de la corrida final en Colab.
 
 ## Notebooks
 
@@ -11,7 +11,7 @@ Proyecto académico de **Inteligencia Artificial Generativa** de la Universidad 
 | 01 — MNIST y CIFAR-10 | DDPM con diffusers, 15000 pasos por dataset, FID/KID/precisión/recall | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/01_Punto1_FINAL.ipynb) |
 | 02 — Oxford Flowers | Difusión con Keras a 128x128, 80 épocas, FID con 1000 imágenes | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/02_Flowers_Chollet.ipynb) |
 | 03 — Visualización de Stable Diffusion | Ejecutado: latentes 64x64 vs píxel 512x512, texto CLIP y proceso de denoising | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/03_SD_Visual.ipynb) |
-| 04 — Arquitecturas de video | Explicación de arquitecturas, objetivos, evaluación y demo de CogVideoX | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/04_Video_SOTA.ipynb) |
+| 04 — Arquitecturas de video | Ejecutado: arquitecturas, evaluación y demo de CogVideoX | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/04_Video_SOTA.ipynb) |
 
 ## Resultados del punto 1
 
@@ -35,6 +35,8 @@ El notebook 03 está ejecutado. Muestra el latente de 64x64 y el píxel de 512x5
 
 El documento cubre representación de video, U-Net 3D, cascadas, difusión latente, DiT/MM-DiT, objetivos de entrenamiento, condicionamiento, video largo, eficiencia, FVD, VBench, tabla comparativa y demo de CogVideoX-2B.
 
+El notebook 04 también está ejecutado: la demo de CogVideoX-2B generó 33 fotogramas a 720x480, 20 pasos y guidance 6.0, y guardó el clip y el panel de fotogramas. La demo es ilustrativa y no un benchmark.
+
 ## Cómo ejecutarlos
 
 Los notebooks están preparados para **Google Colab**. Descárgalos o ábrelos con el badge y selecciona un runtime con GPU T4.
@@ -49,7 +51,7 @@ Los notebooks están preparados para **Google Colab**. Descárgalos o ábrelos c
 - **01:** entrenado con 15000 pasos en MNIST y CIFAR-10. DPM-Solver se excluyó de la comparación porque no convergió con este modelo y 20 pasos.
 - **02:** 80 épocas configuradas y FID con 1000 imágenes; la corrida final y sus figuras están pendientes. El dataset se baraja antes de agrupar los lotes.
 - **03:** ejecutado: latente 64x64 contra píxel 512x512 en seis pasos, con el factor de escala del VAE corregido (`0.18215`). La imagen final y el panel de evolución están en el notebook.
-- **04:** el documento es el entregable principal; la demo de CogVideoX-2B ilustra el pipeline y no es un benchmark.
+- **04:** documento y demo ejecutados. La demo de CogVideoX-2B ilustra el pipeline y no es un benchmark.
 - Las métricas generativas dependen del número de muestras, el preprocesamiento y el extractor. No compares valores de notebooks distintos sin fijar el protocolo.
 
 ## Estructura del repositorio
