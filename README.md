@@ -2,14 +2,14 @@
 
 Proyecto académico de **Inteligencia Artificial Generativa** de la Universidad Autónoma de Occidente. Reúne cuatro notebooks sobre difusión para imágenes, visualización de Stable Diffusion y arquitecturas de video, más el documento del punto 4.
 
-> **Estado:** punto 1 cerrado, punto 3 ejecutado y punto 4 documentado con demo ejecutada. El punto 2 tiene el código corregido y está pendiente de la corrida final en Colab.
+> **Estado:** puntos 1, 2, 3 y 4 ejecutados y documentados. Falta el video de la exposición.
 
 ## Notebooks
 
 | Notebook | Contenido | Abrir en Colab |
 |---|---|---|
 | 01 — MNIST y CIFAR-10 | DDPM con diffusers, 15000 pasos por dataset, FID/KID/precisión/recall | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/01_Punto1_FINAL.ipynb) |
-| 02 — Oxford Flowers | Difusión con Keras a 128x128, 80 épocas, FID con 1000 imágenes | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/02_Flowers_Chollet.ipynb) |
+| 02 — Oxford Flowers | Ejecutado: difusión Keras 128x128, 80 épocas, FID 156.7 con 1000 imágenes | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/02_Flowers_Chollet.ipynb) |
 | 03 — Visualización de Stable Diffusion | Ejecutado: latentes 64x64 vs píxel 512x512, texto CLIP y proceso de denoising | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/03_SD_Visual.ipynb) |
 | 04 — Arquitecturas de video | Ejecutado: arquitecturas, evaluación y demo de CogVideoX | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nicothinn/Modelos_imagenes_basados_difusion/blob/main/04_Video_SOTA.ipynb) |
 
@@ -23,6 +23,10 @@ Protocolo: **1000 imágenes generadas contra 1000 del test**, 32x32, caracterís
 | CIFAR-10 | 91.1 | 0.040 | 0.781 | 0.345 | 0.479 |
 
 `clean-fid` da 31.1 en MNIST y 95.4 en CIFAR-10; se usa como comprobación, no como protocolo principal. Los valores no son comparables con papers que usan 50000 muestras u otro extractor.
+
+## Resultado del punto 2
+
+El notebook 02 está ejecutado con 80 épocas. El FID con 1000 imágenes generadas y 1000 reales es **156.7**. Las muestras pasan de manchas de color a flores reconocibles, con textura de acuarela; no son fotorrealistas. El modelo tiene 1.9 millones de parámetros y trabaja a 128x128, así que el número no es comparable con papers que usan modelos y muestras mucho mayores.
 
 ## Resultado del punto 3
 
@@ -49,7 +53,7 @@ Los notebooks están preparados para **Google Colab**. Descárgalos o ábrelos c
 ## Estado y limitaciones
 
 - **01:** entrenado con 15000 pasos en MNIST y CIFAR-10. DPM-Solver se excluyó de la comparación porque no convergió con este modelo y 20 pasos.
-- **02:** 80 épocas configuradas y FID con 1000 imágenes; la corrida final y sus figuras están pendientes. El dataset se baraja antes de agrupar los lotes.
+- **02:** ejecutado: 80 épocas y FID de 156.7 con 1000 imágenes. Las muestras son flores reconocibles, no fotorrealistas; el modelo es pequeño (1.9M de parámetros).
 - **03:** ejecutado: latente 64x64 contra píxel 512x512 en seis pasos, con el factor de escala del VAE corregido (`0.18215`). La imagen final y el panel de evolución están en el notebook.
 - **04:** documento y demo ejecutados. La demo de CogVideoX-2B ilustra el pipeline y no es un benchmark.
 - Las métricas generativas dependen del número de muestras, el preprocesamiento y el extractor. No compares valores de notebooks distintos sin fijar el protocolo.
